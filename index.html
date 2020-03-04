@@ -144,114 +144,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/20/CFG/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="LeasBFF">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hazel">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/20/CFG/" class="post-title-link" itemprop="url">Context-free grammar</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-20 22:22:23" itemprop="dateCreated datePublished" datetime="2020-02-20T22:22:23+01:00">2020-02-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-04 00:11:05" itemprop="dateModified" datetime="2020-03-04T00:11:05+01:00">2020-03-04</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Formal-grammar"><a href="#Formal-grammar" class="headerlink" title="Formal grammar"></a>Formal grammar</h2><hr>
-<h3 id="Formal-definition-Unrestricted-grammar"><a href="#Formal-definition-Unrestricted-grammar" class="headerlink" title="Formal definition (Unrestricted grammar)"></a>Formal definition (Unrestricted grammar)</h3><h4 id="The-syntax-of-grammars"><a href="#The-syntax-of-grammars" class="headerlink" title="The syntax of grammars"></a>The syntax of grammars</h4><p>In the classic formalization of generative grammars first proposed by Noam Chomsky in the 1950s, a grammar <em>G</em> consists of the following components:</p>
-<ul>
-<li>A finite set <em>N</em> of <strong>nonterminal symbols</strong>, that is disjoint with the strings formed from <em>G</em>.</li>
-<li>A finite set $\Sigma$ of <strong>terminal symbols</strong> that is disjoint from <em>N</em>.</li>
-<li>A finite set <em>P</em> of <strong>production rules</strong>, each rule of the form<script type="math/tex; mode=display">(\Sigma \cup N)^{*}N(\Sigma \cup N)^{*} \rightarrow(\Sigma \cup N)^{*}</script>where * is the <strong>Kleene star</strong> operator and $\cup$ denotes set union. That is, each production rule maps from one string of symbols to another, where the first string (the “head”) contains an arbitrary number of symbols provided at least one of them is a nonterminal. In the case that the second string (the “body”) consists solely of the <strong>empty string</strong>—i.e., that it contains no symbols at all—it may be denoted with a special notation (often e or $\epsilon$) in order to avoid confusion.</li>
-<li>A distinguished symbol $S \in N$ that is the <strong>start symbol</strong>, also called the sentence symbol.  </li>
-</ul>
-<p>A grammar is formally defined as the tuple $(N, \Sigma, P, S)$. Such a formal grammar is often called a rewriting system or a phrase structure grammar in the literature.</p>
-<hr>
-<h3 id="Context-free-grammar"><a href="#Context-free-grammar" class="headerlink" title="Context-free grammar"></a>Context-free grammar</h3><p>In formal language theory, a <strong>context-free grammar (CFG)</strong>  is a certain type of formal grammar.<br>In context-free grammars, all rules are <em>one-to-one</em>, <em>one-to-many</em>, or <em>one-to-none</em>. These rules can be applied regardless of context. The left-hand side of the production rule is always a <strong>nonterminal</strong> symbol. This means that the symbol does not appear in the resulting formal language. So in our case, our language contains the letters $\alpha$ and $\beta$ but not $A$.<br>Rules can also be applied in reverse to check whether a string is grammatically correct according to the grammar.<br>Here is an example context-free grammar that describes all two-letter strings containing the letters $\alpha$ or $\beta$.</p>
-<script type="math/tex; mode=display">S \rightarrow A A</script><script type="math/tex; mode=display">A \rightarrow \alpha</script><script type="math/tex; mode=display">A \rightarrow \beta</script><p>If we start with the nonterminal symbol $S$ then we can use the rule $S \rightarrow A A$ to turn $S$ into $AA$. We can then apply one of the two later rules. For example, if we apply $A \rightarrow \beta$ to the first $A$ we get $\beta A$. If we then apply $A \rightarrow \alpha$  to the second $A$ we get $\beta \alpha$. Since both $\alpha$  and $\beta$  are terminal symbols, and in context-free grammars terminal symbols never appear on the left hand side of a production rule, there are no more rules that can be applied. This same process can be used, applying the last two rules in different orders in order to get all possible strings within our simple context-free grammar.</p>
-<h4 id="Formal-definitions"><a href="#Formal-definitions" class="headerlink" title="Formal definitions"></a>Formal definitions</h4><p>A context-free grammar G is defined by the 4-tuple:<br>$G=(V, \Sigma, R, S)$ where</p>
-<ol>
-<li>$V$ is a finite set; each element $v \in V$ is called <em>a nonterminal character</em> or a variable. Each variable represents a different type of phrase or clause in the sentence. Variables are also sometimes called syntactic categories. Each variable defines a sub-language of the language defined by $G$.</li>
-<li>$\Sigma$ is a finite set of <em>terminals</em>, disjoint from $V$, which make up the actual content of the sentence. The set of terminals is the alphabet of the language defined by the grammar $G$.</li>
-<li><em>R</em> is a finite relation from <em>V</em> to $(V \cup \Sigma)^{<em>}$, where the asterisk represents the Kleene star operation. The members of </em>R<em> are called the </em>(rewrite) rules<em> or </em>productions<em> of the grammar. (also commonly symbolized by a </em>P*)</li>
-<li><em>S</em> is the start variable (or start symbol), used to represent the whole sentence (or program). It must be an element of <em>V</em>.</li>
-</ol>
-<h5 id="Production-rule-notation"><a href="#Production-rule-notation" class="headerlink" title="Production rule notation"></a>Production rule notation</h5><p>A production rule in <em>R</em> is formalized mathematically as a pair $(\alpha, \beta) \in R$, where $\alpha \in V$ is a nonterminal and $\beta \in (V \cup \Sigma)^{<em>}$ is a <strong>string</strong> of variables and/or terminals; rather than using ordered pair notation, production rules are usually written using an arrow operator with $\alpha$ as its left hand side and $\beta$ as its right hand side: $\alpha \rightarrow \beta$.<br>It is allowed for $\beta$ to be the <strong>empty string</strong>, and in this case it is customary to denote it by $\epsilon$. The form $\alpha \rightarrow \epsilon$ is called an $\epsilon$-production.<br>It is common to list all right-hand sides for the same left-hand side on the same line, using | (the <em>*pipe symbol</em></em>) to separate them. Rules $\alpha \rightarrow \beta<em>{1}$ and $\alpha \rightarrow \beta</em>{2}$ can hence be written as $\alpha \rightarrow \beta<em>{1} | \beta</em>{2}$. In this case, $\beta<em>{1}$ and $\beta</em>{2}$ is called the first and second alternative, respectively.</p>
-<h5 id="Rule-application"><a href="#Rule-application" class="headerlink" title="Rule application"></a>Rule application</h5><p>For any strings $u, v \in (V \cup \Sigma)^{<em>}$, we say u directly yields $v$, written as $u \Rightarrow v,$ if $\exists(\alpha, \beta) \in R$ with $\alpha \in V$ and $u<em>{1}, u</em>{2} \in(V \cup \Sigma)^{</em>}$ such that $u=u<em>{1} \alpha u</em>{2}$ and $v=u<em>{1} \beta u</em>{2}$. Thus, $v$ is a result of applying the rule $(\alpha, \beta)$ to $u$.</p>
-<h5 id="Repetitive-rule-application"><a href="#Repetitive-rule-application" class="headerlink" title="Repetitive rule application"></a>Repetitive rule application</h5><p>For any strings $u, v \in(V \cup \Sigma)^{<em>}$, we say $u$ <strong>yields</strong> $v$, written as $u \stackrel{</em>}{\Rightarrow} v$ (or $u \Rightarrow \Rightarrow v$ in some textbooks), if $\exists k \geq 1 \exists u<em>{1}, \cdots, u</em>{k} \in(V \cup \Sigma)^{<em>}$ such that $u=u<em>{1} \Rightarrow u</em>{2} \Rightarrow \cdots \Rightarrow u_{k}=v$. In this case, if $k \geq 2 \text { (i.e., } u \neq v)$, the relation $u \stackrel{+}{\Rightarrow} v$ holds. In other words, $(\stackrel{</em>}{\Rightarrow})$ and $(\stackrel{+}{\Rightarrow})$ are the <strong>reflexive transitive closure</strong> (allowing a word to yield itself) and the <strong>transitive closure</strong> (requiring at least one step) of $(\Rightarrow)$, respectively.</p>
-<h5 id="Context-free-language"><a href="#Context-free-language" class="headerlink" title="Context-free language"></a>Context-free language</h5><p>The language of a grammar $G=(V, \Sigma, R, S)$ is the set</p>
-<script type="math/tex; mode=display">L(G)=\left\{w \in \Sigma^{*}: S \stackrel{*}{\Rightarrow} w\right\}</script><p>A language L is said to be a context-free language (CFL), if there exists a CFG $G$, such that $L=L(G)$.<br><strong>Non-deterministic pushdown automata</strong> recognize exactly the context-free languages.</p>
-<h5 id="Proper-CFGs"><a href="#Proper-CFGs" class="headerlink" title="Proper CFGs"></a>Proper CFGs</h5><p>A context-free grammar is said to be proper, if it has</p>
-<ul>
-<li>no <strong>unreachable symbols</strong>: $\forall N \in V: \exists \alpha, \beta \in (V \cup \Sigma)^{<em>}: S \stackrel{</em>}{\Rightarrow} \alpha N \beta$</li>
-<li>no <strong>unproductive symbols</strong>: $\forall N \in V: \exists w \in \Sigma^{<em>}: N \stackrel{</em>}{\Rightarrow} w$</li>
-<li>no $\epsilon$-productions: $\neg \exists N \in V:(N, \varepsilon) \in R$</li>
-<li>no cycles: $\neg \exists N \in V: N \stackrel{+}{\Rightarrow} N$</li>
-</ul>
-<p>Every context-free grammar can be effectively transformed into a <strong>weakly equivalent</strong> one without unreachable symbols, a weakly equivalent one without unproductive symbols, and a weakly equivalent one without cycles. Every context-free grammar not producing $\epsilon$ can be effectively transformed into a weakly equivalent one without $\epsilon$-productions; altogether, every such grammar can be effectively transformed into a weakly equivalent proper CFG.</p>
-<h4 id="Chomsky-normal-form-CNF"><a href="#Chomsky-normal-form-CNF" class="headerlink" title="Chomsky normal form (CNF)"></a>Chomsky normal form (CNF)</h4><p>In formal language theory, a context-free grammar G is said to be in Chomsky normal form (first described by Noam Chomsky) if all of its production rules are of the form:<br>$A \rightarrow B C$, or<br>$A \rightarrow a$, or<br>$S \rightarrow \epsilon$,<br>where $A$, $B$, and $C$ are <strong>nonterminal symbols</strong>, $a$ is a <strong>terminal symbol</strong> (a symbol that represents a constant value), $S$ is the start symbol, and $\epsilon$ denotes the <strong>empty string</strong>. Also, neither $B$ nor $C$ may be the <strong>start symbol</strong>, and the third production rule can only appear if $\epsilon$ is in $L(G)$, the language produced by the context-free grammar $G$.<br>Every grammar in Chomsky normal form is context-free, and conversely, every context-free grammar can be transformed into an <strong>equivalent</strong> one which is in Chomsky normal form and has a size no larger than the square of the original grammar’s size.</p>
-<hr>
-<h3 id="Regular-grammars"><a href="#Regular-grammars" class="headerlink" title="Regular grammars"></a>Regular grammars</h3><p>Every regular grammar is context-free, but not all context-free grammars are regular. The following context-free grammar, however, is also regular.<br>In regular grammars, the left hand side is again only a single nonterminal symbol, but now the right-hand side is also restricted. The right side may be the empty string, or a single terminal symbol, or a single terminal symbol followed by a nonterminal symbol, but nothing else. (Sometimes a broader definition is used: one can allow longer strings of terminals or single nonterminals without anything else, making languages easier to denote while still defining the same class of languages.)<br>The language ${a^{n} b^{n} | n \geq 1}$ defined above is not regular, but the language ${a^{n} b^{m} | m, n \geq 1}$ (at least 1 $a$ followed by at least 1 $b$, where the numbers may be different) is, as it can be defined by the grammar $G_{3}$ with $N={S, A, B}, \Sigma={a, b}$, $S$ the start symbol, and the following production rules:</p>
-<ol>
-<li>$S \rightarrow a A$</li>
-<li>$A \rightarrow a A$</li>
-<li>$A \rightarrow b B$</li>
-<li>$B \rightarrow b B$</li>
-<li>$B \rightarrow \epsilon$</li>
-</ol>
-<p>All languages generated by a regular grammar can be recognized in $O(n)$ time by a <strong>finite state machine</strong>. Although, in practice, regular grammars are commonly expressed using <strong>regular expressions</strong>, some forms of regular expression used in practice do not strictly generate the regular languages and do not show linear recognitional performance due to those deviations.</p>
-<hr>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/20/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -381,13 +273,9 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">1</span>
           <span class="site-state-item-name">posts</span>
         </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">1</span>
-        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
@@ -473,59 +361,6 @@
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 
