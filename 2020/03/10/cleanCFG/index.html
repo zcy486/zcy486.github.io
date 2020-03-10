@@ -20,27 +20,32 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hazel">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="通常情况下，人们提供的语法不会包含未定义，不可到达或非生成性的非终结符。如果出现了，那几乎可以肯定是一个失误（或者是用来测试的！），然后我们就要检测和报告出来。然而，这种异常情况很容易出现在生成的语法或由其他语法转换所引入的语法中，这种情况下我们就希望能检测到然后“清理”一下语法。从一个上下文无关语法中检测和删除无用非终结符和规则的算法包含两个步骤：移除非生成性规则以及移除不可到达的非终结符。令人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="清理上下文无关语法">
+<meta property="og:url" content="http://yoursite.com/2020/03/10/cleanCFG/index.html">
 <meta property="og:site_name" content="Hazel">
+<meta property="og:description" content="通常情况下，人们提供的语法不会包含未定义，不可到达或非生成性的非终结符。如果出现了，那几乎可以肯定是一个失误（或者是用来测试的！），然后我们就要检测和报告出来。然而，这种异常情况很容易出现在生成的语法或由其他语法转换所引入的语法中，这种情况下我们就希望能检测到然后“清理”一下语法。从一个上下文无关语法中检测和删除无用非终结符和规则的算法包含两个步骤：移除非生成性规则以及移除不可到达的非终结符。令人">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-10T11:12:41.000Z">
+<meta property="article:modified_time" content="2020-03-10T13:28:30.653Z">
 <meta property="article:author" content="LeasBFF">
+<meta property="article:tag" content="Parsing">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/">
+<link rel="canonical" href="http://yoursite.com/2020/03/10/cleanCFG/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false
+    isHome : false,
+    isPost : true
   };
 </script>
 
-  <title>Hazel</title>
+  <title>清理上下文无关语法 | Hazel</title>
   
 
 
@@ -140,10 +145,10 @@
             
 
   <div class="posts-expand">
-        
+      
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/10/cleanCFG/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -157,8 +162,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/10/cleanCFG/" class="post-title-link" itemprop="url">清理上下文无关语法</a>
+          清理上下文无关语法
         </h1>
 
         <div class="post-meta">
@@ -183,7 +187,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>通常情况下，人们提供的语法不会包含未定义，不可到达或非生成性的非终结符。如果出现了，那几乎可以肯定是一个失误（或者是用来测试的！），然后我们就要检测和报告出来。然而，这种异常情况很容易出现在生成的语法或由其他语法转换所引入的语法中，这种情况下我们就希望能检测到然后“清理”一下语法。<br>从一个上下文无关语法中检测和删除无用非终结符和规则的算法包含两个步骤：移除非生成性规则以及移除不可到达的非终结符。令人惊叹的由于未定义的非终结符，似的移除无用的规则并不是必须的：第一步为我们自动完成了这个过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">S -&gt; A B | D E</span><br><span class="line">A -&gt; a</span><br><span class="line">B -&gt; b C</span><br><span class="line">C -&gt; c</span><br><span class="line">D -&gt; d F</span><br><span class="line">E -&gt; e</span><br><span class="line">F -&gt; f D</span><br></pre></td></tr></table></figure><br>我们将使用上面的语法来进行演示。它看起来相当单纯：它的所有非终结符都是定义了的，而且它也没有表现出任何可疑的结构。</p>
+        <p>通常情况下，人们提供的语法不会包含未定义，不可到达或非生成性的非终结符。如果出现了，那几乎可以肯定是一个失误（或者是用来测试的！），然后我们就要检测和报告出来。然而，这种异常情况很容易出现在生成的语法或由其他语法转换所引入的语法中，这种情况下我们就希望能检测到然后“清理”一下语法。<br>从一个上下文无关语法中检测和删除无用非终结符和规则的算法包含两个步骤：移除非生成性规则以及移除不可到达的非终结符。令人惊叹的由于未定义的非终结符，似的移除无用的规则并不是必须的：第一步为我们自动完成了这个过程。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">S -&gt; A B | D E</span><br><span class="line">A -&gt; a</span><br><span class="line">B -&gt; b C</span><br><span class="line">C -&gt; c</span><br><span class="line">D -&gt; d F</span><br><span class="line">E -&gt; e</span><br><span class="line">F -&gt; f D</span><br></pre></td></tr></table></figure><br>我们将使用上面的语法来进行演示。它看起来相当单纯：它的所有非终结符都是定义了的，而且它也没有表现出任何可疑的结构。</p>
 <hr>
 <h3 id="移除非生成性规则"><a href="#移除非生成性规则" class="headerlink" title="移除非生成性规则"></a>移除非生成性规则</h3><p>我们通过找到一个生成性规则来寻找非生成性的规则。我们的算法取决于观测，如果一个规则的右侧包含的符号都是生成性的则这个规则就是生成性的。终结符是生成性的因为它能生成终结符，空也是生成性的因为它能生成空字符串。如果一个非终结符有一个生成性规则对应于它那它也是生成性的，但问题是起初我们并不知道哪条规则是生成性的，因为这本身就是我们在努力寻找的。<br>我们解决这个问题，首先通过使所有规则和非终结符都是“不知道”的。现在我们来看前文中的语法，对于每一条我们不知道的规则，其右侧的成员都是生成性的，那我们就标记这条规则和它定义的非终结符为“生成性”的。这将为规则<strong>A—&gt;a</strong>, <strong>C—&gt;c</strong>, 以及<strong>E—&gt;e</strong>产生标记，还有非终结符<strong>A, C和E</strong>。<br>现在我们知道的更多了，并且可以将这些用于对语法的第二轮扫描了。这使我们能标记规则<strong>B—&gt;b C</strong>以及非终结符<strong>B</strong>，因为现在<strong>C</strong>已知是生成性的了。第三轮确定了<strong>S—&gt;A B</strong>和<strong>S</strong>。第四轮没有产生新的东西，所以也就没有进行第五轮的必要了。<br>现在我们知道<strong>S, A, B, C和E</strong>是生成性的，但是<strong>D、F</strong>以及规则<strong>S—&gt;D E</strong>还是标记“不知道”的。然而我们知道了更多的：知道我们尝试了生成性的所有可能路径，并且没有为<strong>D、F以及S</strong>的第二条规则找到任何可能的路径。这意味着我们现在可以更新一下对于“非生成性”的“不确定性”的信息了。<strong>D、F</strong>的规则以及<strong>S</strong>的第二条规则可以从语法中移除了；结果如下所示。这就使得<strong>D、F</strong>成为了未定义的，而<strong>S</strong>仍然留在语法中因为它是生成性的，虽然有一个非生成性规则。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">S -&gt; A B</span><br><span class="line">A -&gt; a</span><br><span class="line">B -&gt; b C</span><br><span class="line">C -&gt; c</span><br><span class="line">E -&gt; e</span><br></pre></td></tr></table></figure><br>看看当语法中包含一个未定义的非终结符，例如<em>U</em>，将会发生什么，是一件有趣的事情。首先<em>U</em>将被预定义为“不知道”的，而因为没有规则定义它，它将一直保持“不知道”状态。因此，任何右侧有着<em>U</em>的规则<em>R</em>都将会是“不知道”的。最终两者都会被定义为“非生成性”的，然后所有的R规则都会被移除。可以看到“未定义的非终结符”只是“非生成性”的非终结符的一种特殊情况：因为它没有规则，所以他是非生成性的。<br>上述知识改进的算法使我们关于闭包算法的第一个例子。闭包算法有两个主要特点：初始化，是对最初了解的一个评估，部分源于其现状和“不知道的”部分；推导规则，介绍从几个地方获取的信息是如何结合的。对于我们的问题的推导规则是：<br><strong>对于每一个我们知道其右侧的所有成员都是生成性的规则，标记它定义的规则和非终结符为“生成性”的。</strong></p>
 <hr>
@@ -191,177 +195,36 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">S -&gt; A B</span><br><span class="line">A -&gt; a</span><br><span class="line">B -&gt; b C</span><br><span class="line">C -&gt; c</span><br></pre></td></tr></table></figure>
 <p>移除不可到达的规则不会导致在一个可到达的规则中使用的非终结符<strong>N</strong>变成未定义的，因为只有当移除了<strong>N</strong>的所有定义的规则才能变成未定义的，但是又因为<strong>N</strong>已经是可到达的，所以上诉过程将不会移除它的任何一条规则。对相同参数的稍微修改可以看出移除不可到达的规则不能导致一个在可到达规则中使用的非终结符<strong>N</strong>变成非生成性的：生成性的<strong>N</strong>，否则无法在前面的清理步骤中留存下来，只能通过移除它的定义规则来使之成为非生成性的，但是由于<strong>N</strong>是可到达的，上面的过程将不会移除它的任何规则。这最后表明在移除了非生成性的非终结符以及移除了不可到达的非终结符之后，我们没有必要再做一遍移除非生成性的非终结符。<br><strong>然而有趣的是请注意，如果先移除不可到达的非终结符然后在移除非生成性的规则将有可能导致语法再次含有不可到达的非终结符。本文开始所示的语法就是一个例子。<br>移除非生成性规则是一个自底向上的过程：只有底层，终结符所处的位置，才能知道哪些是生成性的。移除不可到达的非终结符是一个自顶向下的过程：只有顶层，起始符号所处的位置，才知道哪些是可到达的。</strong></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/Parsing/" rel="tag"># Parsing</a>
+          </div>
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/BNF/">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="LeasBFF">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hazel">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/03/04/BNF/" class="post-title-link" itemprop="url">Backus-Naur Form</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2020-03-04 15:06:11 / Modified: 15:52:25" itemprop="dateCreated datePublished" datetime="2020-03-04T15:06:11+01:00">2020-03-04</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="Backus-Naur-Form-BNF-notation"><a href="#Backus-Naur-Form-BNF-notation" class="headerlink" title="Backus-Naur Form (BNF) notation"></a>Backus-Naur Form (BNF) notation</h3><p>When describing languages, Backus-Naur form (BNF) is a formal notation for encoding grammars intended for human consumption.<br>Many programming languages, protocols or formats have a BNF description in their specification.<br>Every rule in Backus-Naur form has the following structure:<br><code>name ::= expansion</code><br>The symbol <code>::=</code> means “may expand into” and “may be replaced with.”<br>In some texts, a name is also called a <em>non-terminal symbol</em>.<br>Every name in Backus-Naur form is surrounded by angle brackets, <code>&lt; &gt;</code>, whether it appears on the left- or right-hand side of the rule.<br>An <em>expansion</em> is an expression containing terminal symbols and non-terminal symbols, joined together by sequencing and choice.<br>A terminal symbol is a literal like (<code>&quot;+&quot;</code> or <code>&quot;function&quot;</code>) or a class of literals (like <code>integer</code>).<br>Simply juxtaposing expressions indicates sequencing.<br>A vertical bar | indicates choice.<br>For example, in BNF, the classic expression grammar is:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;expr&gt; ::&#x3D; &lt;term&gt; &quot;+&quot; &lt;expr&gt; | &lt;term&gt;</span><br><span class="line">&lt;term&gt; ::&#x3D; &lt;factor&gt; &quot;*&quot; &lt;term&gt; | &lt;factor&gt;</span><br><span class="line">&lt;factor&gt; ::&#x3D; &quot;(&quot; &lt;expr&gt; &quot;)&quot; | &lt;const&gt;</span><br><span class="line">&lt;const&gt; ::&#x3D; integer</span><br></pre></td></tr></table></figure><br>Naturally, we can define a grammar for rules in BNF:</p>
-<script type="math/tex; mode=display">rule \rightarrow name ::= expansion</script><script type="math/tex; mode=display">name \rightarrow < identifer ></script><script type="math/tex; mode=display">expansion \rightarrow expansion expansion</script><script type="math/tex; mode=display">expansion \rightarrow expansion | expansion</script><script type="math/tex; mode=display">expansion \rightarrow name</script><script type="math/tex; mode=display">expansion \rightarrow terminal</script><p>We might define identifiers as using the regular expression <code>[-A-Za-z_0-9]+</code>.<br>A terminal could be a quoted literal (like <code>&quot;+&quot;</code>, <code>&quot;switch&quot;</code> or <code>&quot;&lt;&lt;=&quot;</code>) or the name of a class of literals (like <code>integer</code>).<br>The name of a class of literals is usually defined by other means, such as a regular expression or even prose.</p>
-<hr>
-<h3 id="Extended-BNF-EBNF-notation"><a href="#Extended-BNF-EBNF-notation" class="headerlink" title="Extended BNF (EBNF) notation"></a>Extended BNF (EBNF) notation</h3><p>Extended Backus-Naur form (EBNF) is a collection of extensions to Backus-Naur form.<br>Not all of these are strictly a superset, as some change the rule-definition relation <code>::=</code> to <code>=</code>, while others remove the angled brackets from non-terminals.<br>More important than the minor syntactic differences between the forms of EBNF are the additional operations it allows in expansions.</p>
-<h4 id="Option"><a href="#Option" class="headerlink" title="Option"></a>Option</h4><p>In EBNF, square brackets around an expansion, <code>[ expansion ]</code>, indicates that this expansion is optional.<br>For example, the rule:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;term&gt; ::&#x3D; [ &quot;-&quot; ] &lt;factor&gt;</span><br></pre></td></tr></table></figure><br>allows factors to be negated.</p>
-<h4 id="Repetition"><a href="#Repetition" class="headerlink" title="Repetition"></a>Repetition</h4><p>In EBNF, curly braces indicate that the expression may be repeated zero or more times.<br>For example, the rule:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;args&gt; ::&#x3D; &lt;arg&gt; &#123; &quot;,&quot; &lt;arg&gt; &#125;</span><br></pre></td></tr></table></figure><br>defines a conventional comma-separated argument list.</p>
-<h4 id="Grouping"><a href="#Grouping" class="headerlink" title="Grouping"></a>Grouping</h4><p>To indicate precedence, EBNF grammars may use parentheses, <code>()</code>, to explictly define the order of expansion.<br>For example, the rule:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;expr&gt; ::&#x3D; &lt;term&gt; (&quot;+&quot; | &quot;-&quot;) &lt;expr&gt;</span><br></pre></td></tr></table></figure><br>defines an expression from that allows both addition and substraction.</p>
-<h4 id="Concatenation"><a href="#Concatenation" class="headerlink" title="Concatenation"></a>Concatenation</h4><p>In some forms of EBNF, the , operator explicitly denotes concatenation, rather than relying on juxtaposition(并置).</p>
-<hr>
-<h3 id="Extended-BNF-in-TPTP-Language"><a href="#Extended-BNF-in-TPTP-Language" class="headerlink" title="Extended BNF in TPTP Language"></a>Extended BNF in TPTP Language</h3><h4 id="Syntactic-Rules"><a href="#Syntactic-Rules" class="headerlink" title="Syntactic Rules"></a>Syntactic Rules</h4><ul>
-<li>Use the standard <code>::=</code> separator</li>
-<li>E.g., <code>&lt;source&gt; ::= &lt;general_term&gt;</code></li>
-</ul>
-<h4 id="Semantic-Rules"><a href="#Semantic-Rules" class="headerlink" title="Semantic Rules"></a>Semantic Rules</h4><ul>
-<li>Used when only a subset of the syntax makes semantic sense</li>
-<li>Use a <code>:==</code> separator</li>
-<li>E.g., <code>&lt;source&gt; :== &lt;dag_source&gt; | &lt;internal_Source&gt; |</code>, etc.</li>
-<li>Extended to rules reachable from only such rules</li>
-</ul>
-<h4 id="Token-Rules"><a href="#Token-Rules" class="headerlink" title="Token Rules"></a>Token Rules</h4><ul>
-<li>Used for rules that produce tokens</li>
-<li>Use a <code>::-</code> separator</li>
-<li>E.g., <code>&lt;lower_word&gt; ::- &lt;lower_alpha&gt;&lt;alpha_numeric&gt;*</code></li>
-</ul>
-<h4 id="Character-Macros"><a href="#Character-Macros" class="headerlink" title="Character Macros"></a>Character Macros</h4><ul>
-<li>Define character classes with regular expressions</li>
-<li>Use a <code>:::</code> separator</li>
-<li>E.g., <code>&lt;lower_alpha&gt; ::: [a-z]</code></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
         
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/20/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="LeasBFF">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hazel">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/02/20/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-02-20 22:02:07" itemprop="dateCreated datePublished" datetime="2020-02-20T22:02:07+01:00">2020-02-20</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/04/BNF/" rel="prev" title="Backus-Naur Form">
+      <i class="fa fa-chevron-left"></i> Backus-Naur Form
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -412,6 +275,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#移除非生成性规则"><span class="nav-number">1.</span> <span class="nav-text">移除非生成性规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移除不可到达的非终结符"><span class="nav-number">2.</span> <span class="nav-text">移除不可到达的非终结符</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
